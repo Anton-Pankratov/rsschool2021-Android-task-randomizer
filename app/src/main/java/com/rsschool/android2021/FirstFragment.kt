@@ -1,51 +1,55 @@
 package com.rsschool.android2021
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 
-class FirstFragment : Fragment() {
+class FirstFragment : BaseFragment(R.layout.fragment_first) {
 
     private var generateButton: Button? = null
     private var previousResult: TextView? = null
+    private var minValueField: EditText? = null
+    private var maxValueField: EditText? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_first, container, false)
+    private var valuesInterface: IMinMaxValuesPass? = null
+
+    private val previousValue = arguments?.getInt(PREVIOUS_RESULT_KEY)
+
+    override fun findViews() {
+        generateButton = view?.findViewById(R.id.generate)
+        previousResult = view?.findViewById(R.id.previous_result)
+        minValueField = view?.findViewById(R.id.min_value)
+        maxValueField = view?.findViewById(R.id.max_value)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        previousResult = view.findViewById(R.id.previous_result)
-        generateButton = view.findViewById(R.id.generate)
+    override fun setFragmentFunctions() {
+        //previousResult?.text = "Previous result: ${result.toString()}"
+    }
 
-        val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
-        previousResult?.text = "Previous result: ${result.toString()}"
-
-        // TODO: val min = ...
-        // TODO: val max = ...
-
+    override fun setButtonClick() {
         generateButton?.setOnClickListener {
-            // TODO: send min and max to the SecondFragment
+            valuesInterface?.passMinMaxValues(
+                minValueField?.text.toString(),
+                maxValueField?.text.toString()
+            )
         }
+    }
+
+    fun setMinMaxValuesPassInterface(valuesInterface: IMinMaxValuesPass) {
+        this.valuesInterface = valuesInterface
     }
 
     companion object {
 
         @JvmStatic
         fun newInstance(previousResult: Int): FirstFragment {
-            val fragment = FirstFragment()
-            val args = Bundle()
-            args.putInt(PREVIOUS_RESULT_KEY, previousResult)
-            fragment.arguments = args
-            return fragment
+            return FirstFragment().apply {
+                Bundle().apply {
+                    putInt(PREVIOUS_RESULT_KEY, previousResult)
+                    arguments = this
+                }
+            }
         }
 
         private const val PREVIOUS_RESULT_KEY = "PREVIOUS_RESULT"
