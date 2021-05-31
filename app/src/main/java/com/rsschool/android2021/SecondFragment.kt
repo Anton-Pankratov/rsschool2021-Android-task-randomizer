@@ -1,13 +1,8 @@
 package com.rsschool.android2021
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import kotlin.random.Random
 
 class SecondFragment : BaseFragment(R.layout.fragment_second) {
 
@@ -16,22 +11,25 @@ class SecondFragment : BaseFragment(R.layout.fragment_second) {
 
     private var valueInterface: IPreviousValuePass? = null
 
-    private val minValue = arguments?.getInt(MIN_VALUE_KEY) ?: 0
-    private val maxValue = arguments?.getInt(MAX_VALUE_KEY) ?: 0
-    private var previousValue = "0"
+    private val minValue get() = arguments?.getInt(MIN_VALUE_KEY) ?: 0
+    private val maxValue get() = arguments?.getInt(MAX_VALUE_KEY) ?: 0
+    private var randomValue = "0"
 
     override fun findViews() {
         result = view?.findViewById(R.id.result)
         backButton = view?.findViewById(R.id.back)
     }
 
-    override fun setFragmentFunctions() {
-        result?.text = generate(minValue, maxValue).toString()
+    override fun setRandomValueText() {
+        generate(minValue, maxValue).toString().apply {
+            randomValue = this
+            result?.text = this
+        }
     }
 
     override fun setButtonClick() {
         backButton?.setOnClickListener {
-            valueInterface?.passPreviousValue(previousValue)
+            valueInterface?.passPreviousValue(randomValue)
         }
     }
 

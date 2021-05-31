@@ -42,35 +42,46 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (action) {
             case ADD_FIRST_FRAGMENT:
-                transaction.add(R.id.container, firstFragment);
+                transaction.add(R.id.container, firstFragment, "first");
                 break;
             case REPLACE_ON_SECOND_FRAGMENT:
-                transaction.replace(R.id.container, secondFragment);
+                transaction.replace(R.id.container, secondFragment, "second");
+                transaction.addToBackStack(null);
                 break;
             case BACK_TO_FIRST_FRAGMENT:
-                transaction.replace(R.id.container, firstFragment);
+                transaction.replace(R.id.container, firstFragment, "first");
+                getSupportFragmentManager().popBackStack();
+                break;
         }
         transaction.commit();
     }
 
     private void setMinMaxValuesPassInterface() {
         firstFragment.setMinMaxValuesPassInterface((min, max) -> {
-            if (Objects.equals(min, "") && !Objects.equals(max, "")) {
-                showToast("Минимальное значение не указано!");
+            if (Objects.equals(min, "") && Objects.equals(max, "")) {
+                showToast("Min and Max values is empty");
+            } else if (Objects.equals(min, "") && !Objects.equals(max, "")) {
+                showToast("Min value is empty");
             } else if (!Objects.equals(min, "") && Objects.equals(max, "")) {
-                showToast("Maксимальное значение не указано!");
-            } else if (Objects.equals(min, "") && Objects.equals(max, "")) {
-                showToast("Минимальное и максимальное значение не указаны!");
+                showToast("Max value is empty");
             } else if (!Objects.equals(min, "") && !Objects.equals(max, "")) {
-                int minValue = Integer.parseInt(min);
-                int maxValue = Integer.parseInt(max);
-                if (minValue > maxValue) {
-                    showToast("Минимальное значение превышает максимальное!");
-                } else {
-                    openSecondFragment(minValue, maxValue);
-                }
+                formValuesFromInput(min, max);
             }
         });
+    }
+
+    private void formValuesFromInput(String min, String max) {
+        try {
+            int minValue = Integer.parseInt(min);
+            int maxValue = Integer.parseInt(max);
+            if (minValue > maxValue) {
+                showToast("Min value is greater than Max");
+            } else {
+                openSecondFragment(minValue, maxValue);
+            }
+        } catch (NumberFormatException e) {
+            showToast("One of the values is too large");
+        }
     }
 
     private void setPreviousValuePassInterface() {

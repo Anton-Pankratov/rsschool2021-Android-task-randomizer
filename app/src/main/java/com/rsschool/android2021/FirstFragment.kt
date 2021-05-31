@@ -14,7 +14,7 @@ class FirstFragment : BaseFragment(R.layout.fragment_first) {
 
     private var valuesInterface: IMinMaxValuesPass? = null
 
-    private val previousValue = arguments?.getInt(PREVIOUS_RESULT_KEY)
+    private val randomValue get() = arguments?.getInt(PREVIOUS_RESULT_KEY)
 
     override fun findViews() {
         generateButton = view?.findViewById(R.id.generate)
@@ -23,8 +23,10 @@ class FirstFragment : BaseFragment(R.layout.fragment_first) {
         maxValueField = view?.findViewById(R.id.max_value)
     }
 
-    override fun setFragmentFunctions() {
-        //previousResult?.text = "Previous result: ${result.toString()}"
+    override fun setRandomValueText() {
+        "Previous result: $randomValue".apply {
+            previousResult?.text = this
+        }
     }
 
     override fun setButtonClick() {

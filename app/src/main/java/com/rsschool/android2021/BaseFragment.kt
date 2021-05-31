@@ -20,13 +20,13 @@ abstract class BaseFragment(@LayoutRes val layout: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         findViews()
-        setFragmentFunctions()
+        setRandomValueText()
         setButtonClick()
     }
 
     abstract fun findViews()
 
-    abstract fun setFragmentFunctions()
+    abstract fun setRandomValueText()
 
     abstract fun setButtonClick()
 }
