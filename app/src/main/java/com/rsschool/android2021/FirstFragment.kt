@@ -42,6 +42,10 @@ class FirstFragment : BaseFragment(R.layout.fragment_first) {
         this.valuesInterface = valuesInterface
     }
 
+    /**
+     * Jvm static annotation need for Java because "companion object" not exist
+     * in this language and it understand that as "static" value.
+     */
     companion object {
 
         @JvmStatic

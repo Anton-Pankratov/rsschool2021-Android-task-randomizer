@@ -1,6 +1,6 @@
 package com.rsschool.android2021;
 
-public interface IPreviousValuePass {
+public interface IRandomValuePass {
 
     void passPreviousValue(String previous);
 }

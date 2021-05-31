@@ -9,7 +9,7 @@ class SecondFragment : BaseFragment(R.layout.fragment_second) {
     private var backButton: Button? = null
     private var result: TextView? = null
 
-    private var valueInterface: IPreviousValuePass? = null
+    private var valueInterface: IRandomValuePass? = null
 
     private val minValue get() = arguments?.getInt(MIN_VALUE_KEY) ?: 0
     private val maxValue get() = arguments?.getInt(MAX_VALUE_KEY) ?: 0
@@ -33,7 +33,7 @@ class SecondFragment : BaseFragment(R.layout.fragment_second) {
         }
     }
 
-    fun setPreviousValuePassInterface(valueInterface: IPreviousValuePass) {
+    fun setRandomValuePassInterface(valueInterface: IRandomValuePass) {
         this.valueInterface = valueInterface
     }
 
