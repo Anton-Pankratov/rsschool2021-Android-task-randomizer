@@ -1,6 +1,7 @@
 package com.rsschool.android2021
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView

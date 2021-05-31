@@ -2,15 +2,19 @@ package com.rsschool.android2021;
 
 import android.os.Bundle;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final String ADD_FIRST_FRAGMENT = "add_first_fragment";
     private static final String REPLACE_ON_SECOND_FRAGMENT = "replace_on_second_fragment";
     private static final String BACK_TO_FIRST_FRAGMENT = "back_to_first_fragment";
+    private static final String TAG_SECOND_FRAGMENT = "tag_second_fragment";
 
     private FirstFragment firstFragment;
     private SecondFragment secondFragment;
@@ -22,6 +26,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         openFirstFragment(randomValue, ADD_FIRST_FRAGMENT);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSecondFragmentInContainerNow()!= null) {
+            secondFragment.passRandomValue();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private Fragment getSecondFragmentInContainerNow() {
+        return getSupportFragmentManager().findFragmentByTag(TAG_SECOND_FRAGMENT);
     }
 
     private void openFirstFragment(int previousNumber, String action) {
@@ -43,12 +60,11 @@ public class MainActivity extends AppCompatActivity {
                 transaction.add(R.id.container, firstFragment);
                 break;
             case REPLACE_ON_SECOND_FRAGMENT:
-                transaction.replace(R.id.container, secondFragment);
+                transaction.replace(R.id.container, secondFragment, TAG_SECOND_FRAGMENT);
                 transaction.addToBackStack(null);
                 break;
             case BACK_TO_FIRST_FRAGMENT:
                 transaction.replace(R.id.container, firstFragment);
-                transaction.addToBackStack(null);
                 getSupportFragmentManager().popBackStack();
                 break;
         }

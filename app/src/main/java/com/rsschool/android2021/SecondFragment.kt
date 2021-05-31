@@ -29,8 +29,12 @@ class SecondFragment : BaseFragment(R.layout.fragment_second) {
 
     override fun setButtonClick() {
         backButton?.setOnClickListener {
-            valueInterface?.passPreviousValue(randomValue)
+            passRandomValue()
         }
+    }
+
+    fun passRandomValue() {
+        valueInterface?.passPreviousValue(randomValue)
     }
 
     fun setRandomValuePassInterface(valueInterface: IRandomValuePass) {

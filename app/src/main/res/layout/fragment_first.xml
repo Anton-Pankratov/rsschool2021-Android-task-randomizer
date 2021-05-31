@@ -44,7 +44,7 @@
         android:inputType="number"
         android:layout_marginBottom="20dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/center_guideline"
+        app:layout_constraintTop_toBottomOf="@id/center_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -52,11 +52,12 @@
         android:id="@+id/generate"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginBottom="60dp"
         android:text="Generate"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/center_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/max_value" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
